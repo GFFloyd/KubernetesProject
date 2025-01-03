@@ -40,3 +40,5 @@ O projeto se baseia em uma arquitetura de um cliente fictício, onde temos que m
 #### 5. Como será realizado o processo de Backup?
 
 #### 6. Qual o custo da infraestrutura na AWS (AWS Calculator)?
+
+texto do vito
