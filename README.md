@@ -42,3 +42,4 @@ O projeto se baseia em uma arquitetura de um cliente fictício, onde temos que m
 #### 6. Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
 texto do vito
+texto do Gabriel
