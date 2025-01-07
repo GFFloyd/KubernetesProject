@@ -44,6 +44,7 @@ Nesta etapa devemos configurar algumas portas:
 * **TCP 1500** - Esta porta deverá ser configurada no servidor de origem para mandar dados replicados de forma comprimida e criptografada (ponta-a-ponta via TLS 1.2) para o servidor de replicação, onde ele será descomprimido e descriptografado dentro desta sub-rede e depois escritas nos volumes respectivos.
 
 ###### 1b. Instalação e Configuração do Agente de Replicação
+
 Primeiro passo da migração será instalar o agente de replicação do **AWS MGN** no servidor _on-premise_ para conectarmos os dados do servidor aos serviços da AWS e fazermos as migrações do servidor.
 Devemos configurar no servidor original do cliente para liberar a porta *TCP 443* (HTTPS) para se comunicar com o serviço **MGN** da AWS, esta operação tem diversos propósitos: 
 * Baixar o software necessário para se comunicar com a Nuvem AWS (O agente replicador).
@@ -64,8 +65,16 @@ Nesta parte deveremos criar dois **Launch Templates** distintos, um para a máqu
 Próxima etapa será o de fazer a migração do Banco de Dados para testarmos se a aplicação tem conexão total com o **MySQL**.
 
 ##### 2. Migração do Banco de Dados
-Na parte do Banco de Dados precisaremos usar um serviço diferente, o **AWS DMS**, que fará toda replicação dos Bancos para o serviço de Banco de Dados da AWS, o **AWS RDS** usando o **MySQL**.
-Esta parte é um pouco menos complicada que o processo anterior de migração da aplicação, temos que preparar um sub-rede apenas para o Banco de Dados, que tenha como configuração de entrada e saída pela porta **TCP 3306**, como o Banco de Dados de origem também é um servidor **MySQL** não teremos nenhum problema de conversão na hora da replicação (Script de Conversão), já que o servidor de replicação também usará o **MySQL**.
+
+Na parte do Banco de Dados precisaremos usar um serviço diferente, o **AWS DMS**, que fará toda replicação dos Bancos para o serviço de Banco de Dados da AWS, nesse caso o cliente necessita de uma replicação contínua de dados para manter a sincronia de origem e destino indefinidamente, mantendo seu destino sincronizado com uma origem transacionamente ativa, garantindo que os dados estejam em concomitância com o ambiente modernizado. 
+Este serviço da AWS criará uma réplica usando o **AWS RDS** como o banco de destino final.
+Esta parte é um pouco menos complicada que o processo anterior de migração da aplicação, temos que preparar uma sub-rede apenas para o Banco de Dados, que tenha como configuração de entrada e saída pela porta **TCP 3306** e acesso contínuo ao banco de dados original, como o Banco de Dados de origem também é um servidor **MySQL** não teremos nenhum problema de conversão na hora da replicação (o serviço de conversão da AWS é o **AWS SCT**, que não precisaremos usar neste projeto), já que o servidor de replicação também usará o **MySQL**.
+Abaixo segue a imagem detalhada de como funciona processo de replicação de um banco de dados usando a **AWS DMS**:
+![alt text](image.png)
+
+##### 3. Final das Testagens e Criação de Instâncias de Integração
+
+
 
 #### Quais as ferramentas vão ser utilizadas?
 
