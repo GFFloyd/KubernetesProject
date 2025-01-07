@@ -60,13 +60,19 @@ Na parte do Banco de Dados precisaremos usar um serviço diferente, o **AWS DMS*
 * **SSM**
 
 
-#### Qual o diagrama da infraestrutura na AWS?
+#### 3. Qual o diagrama da infraestrutura na AWS?
 
-#### Como serão garantidos os requisitos de Segurança?
+#### 4. Como serão garantidos os requisitos de Segurança?
+Para garantir a segurança da arquitetura de migração, deve-se utilizar o **AWS Application Migration Service (MGN)** assegurando que as conexões sejam feitas de maneira criptografada (TLS/SSL), transferindo os dados entre o ambiente de origem e a nuvem, protegendo-os contra interceptação. 
 
-#### Como será realizado o processo de Backup?
+As permissões concedidas pelo **AWS MGN** são configuradas pelo **AWS IAM** para assegurar que somente os usuários ou roles autorizadas possuam o acesso. As regras de segurança Inbound e Outbound rules serão de acordo com a infraestrutura da migração, sendo a **port TCP 443** como acesso direto a esses endpoint da API de serviço pelo protocolo HTTPS, e a **port TCP 1500** como saída direta do servidor de origem para a sub-rede da área de preparo. A área de preparação possuíra acesso direto a esses endpoints da API de serviço pela port TCP 443 com entrada direta pela port TCP 1500, garantindo assim boas práticas de seguranças durante a migração.
 
-#### Qual o custo da infraestrutura na AWS (AWS Calculator)?
+#### 5. Como será realizado o processo de Backup?
+A Staging Area se comunica com o Amazon S3 utilizando a port TCP 443 para proteger os dados em trânsito. Os dados transferidos são armazenados em um bucket S3 com políticas de segurança, aceitando somente conexões seguras, sendo acessado restritamente pela Staging Area de administradores autorizados.
+
+
+
+#### 6. Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
 ---
 
