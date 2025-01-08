@@ -111,7 +111,7 @@ Feito isto, temos toda a arquitetura de integração e já podemos fazer os test
 
 #### 3. Qual o diagrama da infraestrutura na AWS?
 
-![Diagrama Arquitetura](diagrama1.png)
+![Diagrama da Arquitetura](diagrama.png)
 
 #### 4. Como serão garantidos os requisitos de Segurança?
 Para garantir a segurança da arquitetura de migração, deve-se utilizar o **AWS Application Migration Service (MGN)** assegurando que as conexões sejam feitas de maneira criptografada (TLS/SSL), transferindo os dados entre o ambiente de origem e a nuvem, protegendo-os contra interceptação. 
