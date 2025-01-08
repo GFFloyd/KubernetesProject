@@ -77,7 +77,16 @@ Abaixo segue a imagem detalhada de como funciona processo de replicação de um 
 
 ##### 3. Final das Testagens e Criação de Instâncias de Integração
 
-Agora que possuímos um banco de dados completamente independente do banco original, é hora de testarmos sua integração com as aplicações replicadas na nuvem. 
+Agora que possuímos um banco de dados completamente independente do banco original, é hora de testarmos sua integração com as aplicações replicadas na nuvem. Ainda na parte de testes podemos conectar nossa instância de back-end ao **RDS** e testarmos conectividade, também podemos testar se a aplicação funciona de forma independente.
+Após passado esse processo, podemos marcar as instâncias para _cutover_, onde iniciaremos o processo de integração.
+O processo de integração é mais simples, somente precisaremos configurar as rotas de entrada da aplicação, pois no fim deste processo a migração estará completa e o **MGN** parará de replicar os dados do servidor original, o que significa que poderemos aposentar o servidor _on-premise_.
+
+##### 4. Configuração das Rotas de Entrada e Load Balancer
+
+Como o cliente já usa o **Route 53**, não precisaremos fazer muitas configurações, pois no final do processo de transição só precisaremos do Load Balancer configurado para se comunicar com o **Route 53**.
+Nesta etapa do Load Balancer, criaremos um do tipo **Application Load Balancer**, que é a solução mais moderna da AWS para balanceamento de cargas de uma aplicação.
+Para configurarmos o **ALB** precisaremos especificar um **Target Group**, registrar os objetos alvos, configurar o Load Balancer e um Listener e, por fim, testar o Load Balancer.
+Feito isto, temos toda a arquitetura de integração e já podemos fazer os testes finais e aposentar o servidor de origem.
 
 #### 2. Quais as ferramentas vão ser utilizadas?
 
@@ -101,6 +110,8 @@ Agora que possuímos um banco de dados completamente independente do banco origi
 
 
 #### 3. Qual o diagrama da infraestrutura na AWS?
+
+![Diagrama Arquitetura](diagrama1.png)
 
 #### 4. Como serão garantidos os requisitos de Segurança?
 Para garantir a segurança da arquitetura de migração, deve-se utilizar o **AWS Application Migration Service (MGN)** assegurando que as conexões sejam feitas de maneira criptografada (TLS/SSL), transferindo os dados entre o ambiente de origem e a nuvem, protegendo-os contra interceptação. 
