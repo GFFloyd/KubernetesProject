@@ -79,17 +79,25 @@ Abaixo segue a imagem detalhada de como funciona processo de replicação de um 
 
 Agora que possuímos um banco de dados completamente independente do banco original, é hora de testarmos sua integração com as aplicações replicadas na nuvem. 
 
-#### Quais as ferramentas vão ser utilizadas?
+#### 2. Quais as ferramentas vão ser utilizadas?
 
-* **MGN**
-* **DMS**
-* **RDS**
-* **EC2**
-* **EBS**
-* **Route 53**
-* **ELB**
-* **S3**
-* **SSM**
+* **MGN** - Serviço que facilita a migração de servidores e aplicações locais ou em outras nuvens para a infraestrutura da AWS, projeto para simplificar o processo de migração ao usar replicação contínua e reduzir o tempo de inatividade.
+
+* **DMS** - Serviço para facilitar a migraçãode bancos de dados para a nuvem da AWS ou entre bancos de dados diferentes, utilizado para modernizar ambientes de dados, transferindo-os para bancos de dados gerenciados, como Amazon RDS.
+
+* **RDS** - Serve para facilitar a configuração, operação e escalabilidade de bancos de dados relacionais na nuvem. Ele elimina grande parte do trabalho operacional envolvido  na manutenção de bancos de dados, como privisionamento de hardware, instalação de software, backup, recuperação e atualizações.
+
+* **EC2** - Fornece servidores virtuais para hospedar aplicações e executar cargas de trabalho de forma escalável e flexível. 
+
+* **EBS** - Serviço utilizado para armazenamento de blocos da AWS projetado para ser usado com instâncias EC2. Ele fornece volumes de armazenamento persistente que podem ser anexados a instâncias EC2, oferecendo desempenho de alto nível para cargas de trabalho como bancos de dados, sistemas de arquivos e aplicativos intensivos de dados.
+
+* **Route 53** - Serviço DNS que oferece recursos de roteamento de tráfego, registro de domínios e verificação de integridade, projetado para alta disponibilidade e escalabilidade. Utilizado para gerenciar nomes de domínio e direcionar usuários finais para aplicações hospedadas na AWS ou fora dela.
+
+* **ALB** - Solução para balanceamento de carga gerenciada pela AWS, projetada para operar na camada de aplicação (Camada 7 do modelo OSI). Ele distribui o tráfego HTTP/HTTPS de forma inteligente com base em regras avançadas, permitindo a criação de aplicações modernas e altamente escaláveis.
+
+* **S3** - Serviço de armazenamento em nuvem altamente escalável, durável e seguro. Permite armazenar e recuperar qualquer quantidade de dados de qualquer lugar na internet.
+
+* **SSM** - Ajuda a gerenciar e operar sua infraestrutura na nuvem e on-premises de forma centralizada. Fornece ferramentas para automação, controle de configuração, gerenciamento de patches, execução remota de comandos e coleta de logs, sendo amplamente utilizado para melhorar a segurança e a eficiência operacional.
 
 
 #### 3. Qual o diagrama da infraestrutura na AWS?
