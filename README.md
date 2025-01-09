@@ -114,7 +114,7 @@ Feito isto, temos toda a arquitetura de integração e já podemos fazer os test
 
 #### 3. Qual o diagrama da infraestrutura na AWS?
 
-![Diagrama](diagrama-atualizado.png)
+![Diagrama](diagrama.png)
 
 ---
 
