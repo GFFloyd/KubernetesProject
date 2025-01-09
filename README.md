@@ -88,6 +88,8 @@ Nesta etapa do Load Balancer, criaremos um do tipo **Application Load Balancer**
 Para configurarmos o **ALB** precisaremos especificar um **Target Group**, registrar os objetos alvos, configurar o Load Balancer e um Listener e, por fim, testar o Load Balancer.
 Feito isto, temos toda a arquitetura de integração e já podemos fazer os testes finais e aposentar o servidor de origem.
 
+---
+
 #### 2. Quais as ferramentas vão ser utilizadas?
 
 * **MGN** - Serviço que facilita a migração de servidores e aplicações locais ou em outras nuvens para a infraestrutura da AWS, projeto para simplificar o processo de migração ao usar replicação contínua e reduzir o tempo de inatividade.
@@ -108,20 +110,27 @@ Feito isto, temos toda a arquitetura de integração e já podemos fazer os test
 
 * **SSM** - Ajuda a gerenciar e operar sua infraestrutura na nuvem e on-premises de forma centralizada. Fornece ferramentas para automação, controle de configuração, gerenciamento de patches, execução remota de comandos e coleta de logs, sendo amplamente utilizado para melhorar a segurança e a eficiência operacional.
 
+---
 
 #### 3. Qual o diagrama da infraestrutura na AWS?
 
-![Diagrama da Arquitetura](diagrama.png)
+![Diagrama](diagrama-atualizado.png)
+
+---
 
 #### 4. Como serão garantidos os requisitos de Segurança?
-Para garantir a segurança da arquitetura de migração, deve-se utilizar o **AWS Application Migration Service (MGN)** assegurando que as conexões sejam feitas de maneira criptografada (TLS/SSL), transferindo os dados entre o ambiente de origem e a nuvem, protegendo-os contra interceptação. 
 
-As permissões concedidas pelo **AWS MGN** são configuradas pelo **AWS IAM** para assegurar que somente os usuários ou roles autorizadas possuam o acesso. As regras de segurança Inbound e Outbound rules serão de acordo com a infraestrutura da migração, sendo a porta **TCP 443** como acesso direto a esses endpoint da API de serviço pelo protocolo HTTPS, e a porta **TCP 1500** como saída direta do servidor de origem para a sub-rede da área de preparo. A área de preparação possuíra acesso direto a esses endpoints da API de serviço pela porta **TCP 443** com entrada direta pela porta **TCP 1500**, garantindo assim boas práticas de seguranças durante a migração.
+Para garantir a segurança da arquitetura de migração, deve-se utilizar o **AWS Application Migration Service (MGN)** assegurando que as conexões sejam feitas de maneira criptografada (TLS 1.2), transferindo os dados entre o ambiente de origem e a nuvem, protegendo-os contra interceptação. 
+
+As permissões concedidas pelo **AWS MGN** são configuradas pelo **AWS IAM** para assegurar que somente os usuários ou roles autorizadas possuam o acesso. As regras de segurança Inbound e Outbound rules serão de acordo com a infraestrutura da migração, sendo a porta **TCP 443** como acesso direto a esses endpoint da API de serviço pelo protocolo HTTPS, e a porta **TCP 1500** como saída direta do servidor de origem para a sub-rede da área de preparo, esta porta usará o protocolo TLS 1.2, que criptografa ponta-a-ponta e compacta os dados do servidor de origem. A área de preparação possuíra acesso direto a esses endpoints da API de serviço pela porta **TCP 443** com entrada direta pela porta **TCP 1500**, garantindo assim boas práticas de seguranças durante a migração.
+
+---
 
 #### 5. Como será realizado o processo de Backup?
+
 A Staging Area se comunica com o **Amazon S3** utilizando a porta **TCP 443** para proteger os dados em trânsito. Os dados transferidos são armazenados em um bucket **S3** com políticas de segurança, aceitando somente conexões seguras, sendo acessado restritamente pela Staging Area de administradores autorizados.
 
-
+---
 
 #### 6. Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
@@ -129,15 +138,30 @@ A Staging Area se comunica com o **Amazon S3** utilizando a porta **TCP 443** pa
 
 ### Escopo Detalhado (Modernização Kubernetes)
 
-#### Quais atividades são necessárias para a migração?
+---
+
+#### Quais atividades são necessárias para a modernização?
+
+Para esta etapa precisaremos seguir alguns passos para completa modernização do sistema usando o Kubernetes:
+* 
+
+---
 
 #### Quais as ferramentas vão ser utilizadas?
 
+---
+
 #### Qual o diagrama da infraestrutura na AWS?
+
+---
 
 #### Como serão garantidos os requisitos de Segurança?
 
+---
+
 #### Como será realizado o processo de Backup?
+
+---
 
 #### Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
@@ -145,7 +169,8 @@ A Staging Area se comunica com o **Amazon S3** utilizando a porta **TCP 443** pa
 
 ### Referências
 
-
+[Documentação da AWS MGN](https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html)
+[Documentação da AWS DMS](https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html)
 
 ---
 texto do vito
