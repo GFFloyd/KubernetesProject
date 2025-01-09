@@ -134,6 +134,29 @@ A Staging Area se comunica com o **Amazon S3** utilizando a porta **TCP 443** pa
 
 #### 6. Qual o custo da infraestrutura na AWS (AWS Calculator)?
 
+Para a primeira etapa, referente a migração das aplicações e banco de dados, foi realizado uma estimativa dos custos com o **AWS Pricing Calculator** com todos os serviços incluídos no processo. 
+
+Segue abaixo a tabela de custos da estimativa:
+
+|Service           |Price (Monthly)    |Region          |
+|------------------|-------------------|-----------------
+|MGN               |$ 0,00             |North Virginia  |
+|S3                |$ 1,04             |North Virginia  |
+|EC2 (MGN)         |$ 42,47            |North Virginia  |
+|EC2 (React)       |$ 16,18            |North Virginia  |
+|EC2 (Back-end)    |$ 28,45            |North Virginia  |
+|SSM               |$ 0,00             |North Virginia  |
+|RDS               |$ 293,34           |North Virginia  |
+|DMS               |$ 169,92           |North Virginia  |
+|ALB               |$ 22,27            |North Virginia  |
+|VPC               |$ 104,48           |North Virginia  |
+|Route 53          |$ 3,60             |North Virginia  |
+|Total             |$ 681,76
+
+Esses valores se referem a um custo mensal, agora podemos calcular o valor mais aproximado do tempo estimado da migração.
+
+...
+
 ---
 
 ### Escopo Detalhado (Modernização Kubernetes)
@@ -164,6 +187,47 @@ Para esta etapa precisaremos seguir alguns passos para completa modernização d
 ---
 
 #### Qual o custo da infraestrutura na AWS (AWS Calculator)?
+
+Para a segunda etapa, referente a modernização com o ambiente EKS incluso, também foi realizado a estimativa de custos com o **AWS Pricing Calculator**. Nessa parte foi criado a estimativa tanto para a região North Virginia quanto para a de Ohio, com o objetivo de mostrar diferentes escolhas com uma arquitetura de Multi-Regiões ao cliente.
+
+Segue abaixo a tabela de custos da estimativa da região North Virginia:
+
+|Service           |Price (Monthly)    |Region          |
+|------------------|-------------------|----------------|
+|RDS               |$ 293,34           |North Virginia  |
+|RDS (Réplica)     |$ 293,34           |North Virginia  |
+|Route 53          |$ 3,60             |North Virginia  |
+|ALB               |$ 22,27            |North Virginia  |
+|WAF               |$ 25,00            |North Virginia  |
+|S3                |$ 2,91             |North Virginia  |
+|CloudWatch        |$ 16,08            |North Virginia  |
+|Secrets Manager   |$ 4,00             |North Virginia  |
+|KMS               |$ 11,00            |North Virginia  |
+|EKS Cluster       |$ 73,00            |North Virginia  |
+|VPC               |$ 154,20           |North Virginia  |
+|Total             |$ 898,74           
+
+Valor total da modernização Single-Region = $ 898,74
+
+Segue abaixo a tabela de custos da estimativa da região Ohio:
+
+|Service           |Price (Monthly)    |Region          |
+|------------------|-------------------|----------------|
+|RDS               |$ 293,34           |Ohio            |
+|RDS (Réplica)     |$ 293,34           |Ohio            |
+|ALB               |$ 22,27            |Ohio            |
+|WAF               |$ 25,00            |Ohio            |
+|S3                |$ 2,91             |Ohio            |
+|CloudWatch        |$ 16,08            |Ohio            |
+|Secrets Manager   |$ 4,00             |Ohio            |
+|KMS               |$ 11,00            |Ohio            |
+|EKS Cluster       |$ 73,00            |Ohio            |
+|VPC               |$ 154,20           |Ohio            |
+|Total             |$ 895,14
+
+Para o modelo de Multi-Region, somamos o custo mensal das duas regiões para uma infraestrutura com uma alta disponibilidade e resiliência das aplicações, reduzindo a sobrecarga de cada região, otimizando a utilização de recursos.
+
+Valor total da modernização Multi-Region = $ 1.793,88
 
 ---
 
