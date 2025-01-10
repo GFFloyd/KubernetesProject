@@ -187,16 +187,30 @@ Detalharemos estes processos melhor nas etapas a seguir.
 
 ###### 2a. Criação da Área de Pipeline
 
-Antes de modificarmos a arquitetura atual, pós migração, temos que criar um ambiente de desenvolvimento e testagem, pois não poderemos simplesmente introduzir uma mudança drástica na arquitetura com um ambiente já em produção. Para fazermos isso, temos que
+Antes de modificarmos a arquitetura atual, pós migração, temos que criar um ambiente de desenvolvimento e testagem, pois não poderemos simplesmente introduzir uma mudança drástica na arquitetura com um ambiente já em produção. 
+Abaixo detalharemos brevemente cada processo do pipeline, como mostra a imagem:
 
 ![Code Pipeline](pipeline.png)
 
+* **Fonte** - Esta é a primeira fase, precisamos vincular o repositório da aplicação e cada modificação neste repositório irá acionar o Pipeline.
+* **Construção** - Nesta fase o código é compilado e os artefatos são produzidos, nesta fase também usaremos o **AWS Code Build** para auxiliar. Na arquitetura atual usaremos esta fase para conteinerizar as partes das aplicações, que usaremos posteriormente no **AWS EKS**, teremos auxílio do **AWS ECR**.
+* **Testagem** - Esta é a etapa de testes e testes unitários, onde as partes da aplicação são testadas para garantir total funcionabilidade, ainda usaremos o **AWS Code Build** nesta etapa.
+* **Preparação** - Nesta fase a aplicação é testada num ambiente que simula o ambiente de produção.
+* **Produção** - Esta é a fase final, onde os usuários do sistema podem interagir com as mudanças dentro da aplicação. Antes desta etapa, teremos que configurar o serviço **EKS** da AWS, que cuidará e gerenciará dos Nodes Kubernetes onde ficarão as APIs da aplicação.
+
+###### 2b. Configuração do AWS EKS
+
+Com a implementação da área de Pipeline, conseguimos integrar a equipe de desenvolvimento diretamente ao **EKS** Cluster, que opera dentro da VPC. O **EKS (Elastic Kubernetes Service)** é uma solução gerenciada pela AWS para orquestração de contêineres com Kubernetes. Ele simplifica a configuração, o gerenciamento e a escalabilidade dos clusters, automatizando processos e permitindo que a equipe se concentre no desenvolvimento e na operação das aplicações.
+
+O tráfego do cliente é direcionado inicialmente pelo **Route 53**, que encaminha as requisições para a arquitetura. O tráfego passa então pelo **WAF (Web Application Firewall)**, que oferece uma camada adicional de proteção para as aplicações, funcionando como um firewall. Em seguida, a conexão é distribuída de forma eficiente pelo **ALB (Application Load Balancer)**, que roteia o tráfego de entrada e o direciona com segurança, em conjunto com o NAT Gateway para os **Worker Nodes**, que estão alocados dentro das subnets privadas.
+
+Dentro do **EKS Cluster**, alocamos duas zonas de disponibilidade (AZs), cada uma com suas respectivas subnets públicas e privadas. As subnets públicas hospedam os **NAT Gateways**, responsáveis pela distribuição do tráfego para os **Worker Nodes**, onde os Pods executam os contêineres que hospedam as aplicações do cluster.
 
 ---
 
 #### Quais as ferramentas vão ser utilizadas?
 
-Ainda continuaremos usando algumas ferramentas usadas no processo de migração, como o EC2, Route 53, S3, EBS, ALB e RDS, mais algumas tecnologias novas:
+Ainda continuaremos usando algumas ferramentas usadas no processo de migração, como o **EC2**, **Route 53**, **S3**, **EBS**, **ALB** e **RDS**, mais algumas tecnologias novas:
 
 **AWS Code Pipeline**
 
