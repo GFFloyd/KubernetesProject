@@ -151,11 +151,10 @@ Segue abaixo a tabela de custos da estimativa:
 |ALB               |$ 22,27            |North Virginia  |
 |VPC               |$ 104,48           |North Virginia  |
 |Route 53          |$ 3,60             |North Virginia  |
-|Total             |$ 681,76
+|**Total**            |**$ 681,76**
 
-Esses valores se referem a um custo mensal, agora podemos calcular o valor mais aproximado do tempo estimado da migração.
+Esses valores se referem a um custo mensal, agora podemos calcular o valor mais aproximado do tempo estimado da migração, imaginamos que o processo de migração não durará mais que 7 dias, sendo assim, o valor de migração ficará em **$ 159,07**. 
 
-...
 
 ---
 
@@ -166,11 +165,56 @@ Esses valores se referem a um custo mensal, agora podemos calcular o valor mais 
 #### Quais atividades são necessárias para a modernização?
 
 Para esta etapa precisaremos seguir alguns passos para completa modernização do sistema usando o Kubernetes:
-* 
+* Criação de novas sub-redes para dividir logicamente a arquitetura (no modelo **three-tier**), alocação de novas Zonas de Disponibilidade, para termos uma estrutura mais resiliente.
+* Conteinerização de cada parte da aplicação (**AWS ECR**) e implementação do **AWS EKS** como contexto Kubernetes dentro da Nuvem AWS.
+* Criação de uma área específica para os desenvolvedores do aplicativo conseguirem seguir os _pipelines_ de _DevOps_ usando os serviços **AWS Code Commit**, **AWS Code Deploy** e o **AWS Code Build**.
+* Implementação de uma melhor estrutura de monitoramento da aplicação usando o **AWS CloudWatch**.
+* Implementação de um sistema mais robusto de segurança da informação usando o **AWS KMS**, o **Secrets Manager** e o **AWS WAF**.
+* Replicação do Banco de Dados em outra Zonas de Disponibilidade e maior otimização para a arquitetura.
+* **Parte Opcional** - Replicar a mesma arquitetura em outra Região AWS como redundância de prevenção a desastres.
+
+Cada passo descrito acima será melhor detalhado abaixo:
+
+##### 1. Criação de Novas Sub-Redes e AZs
+
+Baseada na arquitetura anterior de migração, podemos reutilizar algumas partes já criadas anteriormente, como as duas sub-redes privadas e uma pública, só teremos que criar mais uma Zona de Disponibilidade dentro da Região da Virgínia do Norte e cada sub-rede respectiva, respeitando o modelo **three-tier**.
+
+##### 2. Conteinerização das Aplicações e Implementação de Pipeline DevOps
+
+A etapa de conteinerização é fundamental para a modernização da aplicação dentro da Nuvem AWS, precisamos converter as APIs de máquinas físicas para máquinas conteinerizadas, facilitando o desenvolvimento e integração usando o **Kubernetes**. Para tal, usaremos algumas tecnologias e ferramentas dentro da AWS e também fora dela, como o Docker.
+Antes deste processo precisaremos criar uma área dentro da nuvem focada nos Pipelines DevOps (**AWS Code Pipeline**), uma área separada para desenvolvimentos e testes antes da implantação de modificações da aplicação em produção. Isto irá facilitar o trabalho dos desenvolvedores para criar contêineres e implantá-los no contexto **Kubernetes**.
+Detalharemos estes processos melhor nas etapas a seguir.
+
+###### 2a. Criação da Área de Pipeline
+
+Antes de modificarmos a arquitetura atual, pós migração, temos que criar um ambiente de desenvolvimento e testagem, pois não poderemos simplesmente introduzir uma mudança drástica na arquitetura com um ambiente já em produção. Para fazermos isso, temos que
+
+![Code Pipeline](pipeline.png)
+
 
 ---
 
 #### Quais as ferramentas vão ser utilizadas?
+
+Ainda continuaremos usando algumas ferramentas usadas no processo de migração, como o EC2, Route 53, S3, EBS, ALB e RDS, mais algumas tecnologias novas:
+
+**AWS Code Pipeline**
+
+**AWS Code Build**
+
+**AWS Code Commit**
+
+**AWS ECR**
+
+**AWS EKS**
+
+**Secrets Manager**
+
+**AWS KMS**
+
+**CloudWatch**
+
+**AWS WAF**
 
 ---
 
@@ -205,7 +249,7 @@ Segue abaixo a tabela de custos da estimativa da região North Virginia:
 |KMS               |$ 11,00            |North Virginia  |
 |EKS Cluster       |$ 73,00            |North Virginia  |
 |VPC               |$ 154,20           |North Virginia  |
-|Total             |$ 898,74           
+|**Total**             |**$ 898,74**           
 
 Valor total da modernização Single-Region = $ 898,74
 
@@ -223,7 +267,7 @@ Segue abaixo a tabela de custos da estimativa da região Ohio:
 |KMS               |$ 11,00            |Ohio            |
 |EKS Cluster       |$ 73,00            |Ohio            |
 |VPC               |$ 154,20           |Ohio            |
-|Total             |$ 895,14
+|**Total**             |**$ 895,14**
 
 Para o modelo de Multi-Region, somamos o custo mensal das duas regiões para uma infraestrutura com uma alta disponibilidade e resiliência das aplicações, reduzindo a sobrecarga de cada região, otimizando a utilização de recursos.
 
