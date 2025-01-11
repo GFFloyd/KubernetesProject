@@ -175,11 +175,11 @@ Para esta etapa precisaremos seguir alguns passos para completa modernização d
 
 Cada passo descrito acima será melhor detalhado abaixo:
 
-##### 1. Criação de Novas Sub-Redes e AZs
+#### 1. Criação de Novas Sub-Redes e AZs
 
 Baseada na arquitetura anterior de migração, podemos reutilizar algumas partes já criadas anteriormente, como as duas sub-redes privadas e uma pública, só teremos que criar mais uma Zona de Disponibilidade dentro da Região da Virgínia do Norte e cada sub-rede respectiva, respeitando o modelo **three-tier**.
 
-##### 2. Conteinerização das Aplicações e Implementação de Pipeline DevOps
+#### 2. Conteinerização das Aplicações e Implementação de Pipeline DevOps
 
 A etapa de conteinerização é fundamental para a modernização da aplicação dentro da Nuvem AWS, precisamos converter as APIs de máquinas físicas para máquinas conteinerizadas, facilitando o desenvolvimento e integração usando o **Kubernetes**. Para tal, usaremos algumas tecnologias e ferramentas dentro da AWS e também fora dela, como o Docker.
 Antes deste processo precisaremos criar uma área dentro da nuvem focada nos Pipelines DevOps (**AWS Code Pipeline**), uma área separada para desenvolvimentos e testes antes da implantação de modificações da aplicação em produção. Isto irá facilitar o trabalho dos desenvolvedores para criar contêineres e implantá-los no contexto **Kubernetes**.
@@ -212,23 +212,21 @@ Dentro do **EKS Cluster**, alocamos duas zonas de disponibilidade (AZs), cada um
 
 Ainda continuaremos usando algumas ferramentas usadas no processo de migração, como o **EC2**, **Route 53**, **S3**, **EBS**, **ALB** e **RDS**, mais algumas tecnologias novas:
 
-**AWS Code Pipeline**
+**AWS Code Pipeline** - É um serviço de integração e entrega contínuas (CI/CD) que automatiza os processos de build, teste e implantação do seu código. Permite criar pipelines para gerenciar o fluxo de trabalho completo de entrega de software, desde o commit no repositório até a produção.
 
-**AWS Code Build**
+**AWS Code Build** - Serviço gerenciado pelo CI/CD que compila o código-fonte, executa testes e produz pacotes de software prontos para implantação. Ele é usado frequentemente em conjunto com o AWS CodePipeline, mas pode ser usado separadamente para tarefas específicas de build.
 
-**AWS Code Commit**
+**AWS ECR** - Serviço de registro de contêiner gerenciado, altamente disponível e seguro da AWS. Ele é usado para armazenar, gerenciar e implantar imagens de contêiner, integrando-se facilmente com pipelines de CI/CD.
 
-**AWS ECR**
+**AWS EKS** - É um serviço gerenciado de Kubernetes que facilita a implantação, gerenciamento e escalabilidade de aplicações em contêineres, eliminando a necessidade de configurar manualmente cluster Kubernetes, garantindo alta disponibilidade e integração com outros serviços AWS. 
 
-**AWS EKS**
+**Secrets Manager** - Gerencia segredos, como credenciais de banco de dados, chaves de API e outros dados sensíveis. Ele oferece armazenamento seguro, rotação automática, integração com serviços da AWS e acesso programático aos segredos.
 
-**Secrets Manager**
+**AWS KMS** - Cria, gerencia e protege chaves de criptografia usadas para proteger seus dados. Altamente integrado com outros serviços da AWS, permite o uso de criptografia simétrica e assimétrica, além de fornecer controle detalhado de permissões.
 
-**AWS KMS**
+**CloudWatch** - Serviço de monitoramento da AWS que coleta e analisa métricas, logs e eventos de recursos e aplicações em execução na AWS e on-premises. Ajuda a identificar problemas, configurar alertas e melhorar a visibilidade operacional.
 
-**CloudWatch**
-
-**AWS WAF**
+**AWS WAF** - Ajuda a proteger aplicações web contra ameaças comuns e exploração de vulnerabilidades conhecidas. Ele funciona filtrando tráfego malicioso antes de atingir suas aplicações, com base em regras personalizáveis.
 
 ---
 
@@ -237,6 +235,19 @@ Ainda continuaremos usando algumas ferramentas usadas no processo de migração,
 ---
 
 #### Como serão garantidos os requisitos de Segurança?
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 
