@@ -236,18 +236,17 @@ Ainda continuaremos usando algumas ferramentas usadas no processo de migração,
 
 #### Como serão garantidos os requisitos de Segurança?
 
+A conexão do cliente é inicialmente estabelecida através do Route 53, que oferece proteção contra ataques distribuídos de negação de serviço (DDoS). Em seguida, a conexão é direcionada para o WAF (Web Application Firewall), onde são aplicadas regras de segurança configuradas para permitir ou bloquear solicitações com base em padrões de tráfego definidos. Essas regras personalizáveis podem ser ajustadas para inspecionar as solicitações HTTPS. O WAF está integrado ao Application Load Balancer (ALB), que gerencia o acesso às aplicações por meio da porta 443 (HTTPS), utilizando o protocolo TLS 1.3. Este protocolo criptografa os dados trocados entre cliente e servidor, impedindo que terceiros interceptem ou leiam as informações. Além disso, o ALB adiciona camadas extras de segurança no nível da sub-rede, restringindo o tráfego e garantindo a proteção adicional.
 
+Dentro do EKS Cluster na VPC, os recursos são acessados através do NAT Gateway, alocado nas subnets públicas. O NAT Gateway funciona como uma ponte de conexão, garantindo que as aplicações não sejam expostas diretamente à internet. Para reforçar a segurança, é essencial configurar um Security Group que bloqueie acessos diretos ao NAT Gateway, garantindo que ele apenas atue como proxy para o tráfego de saída, sem ser acessível diretamente.
 
+Em relação à segurança do EKS, é fundamental verificar a configuração de rede para restringir o tráfego entre os pods. Isso assegura que apenas pods autorizados possam se comunicar entre si, mantendo o tráfego controlado. A política de IAM (Identity and Access Management) deve ser implementada com o princípio do mínimo privilégio, garantindo que cada recurso tenha acesso apenas às permissões necessárias para suas operações.
 
+A integração do AWS Secrets Manager e do AWS KMS com o EKS oferece uma abordagem segura e eficiente para o gerenciamento de credenciais sensíveis e dados criptografados no ambiente Kubernetes. A chave para a segurança dessa integração é adotar políticas de acesso baseadas no princípio de mínimos privilégios, utilizar IAM Roles for Service Accounts (IRSA) para um controle de acesso granular e monitorar constantemente o uso de segredos e chaves criptográficas, garantindo que o acesso seja adequado e seguro.
 
+Para o Amazon RDS e suas réplicas, é fundamental aplicar boas práticas de segurança, configurando Security Groups para controlar o tráfego de entrada e saída. A comunicação interna entre a instância principal e as réplicas deve ser restrita ao tráfego da VPC e fontes confiáveis. Além disso, é importante habilitar a criptografia em repouso no RDS, utilizando chaves gerenciadas pelo AWS KMS, o que assegura a proteção dos dados de leitura e gravação. A replicação síncrona garante que as réplicas estejam sempre em sincronia com a instância principal, mantendo a consistência dos dados. Contudo, é essencial configurar o SSL/TLS para proteger os dados sensíveis durante a replicação, prevenindo que informações críticas sejam expostas.
 
-
-
-
-
-
-
-
+A segurança dessa arquitetura deve ser construída com múltiplas camadas, incluindo boas práticas de configuração de rede, controle de acesso, criptografia e monitoramento contínuo. Ao integrar o NAT Gateway, ALB, EKS e outras camadas de segurança, cria-se uma defesa em profundidade, garantindo que os dados e recursos da infraestrutura estejam protegidos contra ameaças externas e internas.
 
 ---
 
