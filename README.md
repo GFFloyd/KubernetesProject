@@ -1,4 +1,4 @@
-## Atividade de Kubernetes na Nuvem AWS
+# Atividade de Kubernetes na Nuvem AWS
 _Projeto de Kubernetes - Compass.UOL_
 
 **Autores: Gabriel Faraco e Vitor Renk**
@@ -7,8 +7,8 @@ _Projeto de Kubernetes - Compass.UOL_
 
 ### Introdução
 
-O projeto se baseia em uma arquitetura de um cliente fictício, onde temos que migrar a arquitetura atual para a Nuvem AWS, depois de migrada teremos que criar uma arquitetura nova e moderna baseada em Kubernetes.
-O projeto é apenas teórico, onde teremos que detalhar de forma técnica todo o processo de migração e modernização.
+O projeto é baseado na arquitetura de um cliente fictício e tem como objetivo migrar a infraestrutura atual para a AWS Cloud. Após a migração, será desenvolvida uma nova arquitetura moderna, fundamentada no uso do Kubernetes.
+Trata-se de um projeto teórico, no qual será necessário detalhar tecnicamente todo o processo de migração e modernização, destacando as etapas, decisões técnicas e as melhores práticas aplicadas.
 
 ---
 
@@ -321,9 +321,8 @@ Valor total da modernização Multi-Region = **$ 2.001,78**
 ### Conclusão
 
 Este projeto foi bastante útil para aprendermos novas tecnologias dentro da Nuvem AWS, como o **AWS EKS** ou o **Code Pipeline**, por mais que o projeto tenha sido mais teórico do que prático, não deixou de ser um ótimo conhecimento que agregamos.
-Tivemos que estudar bastante pra entender como migrar uma arquitetura _on-premise_ para a Nuvem AWS e depois definir os processos de modernização da mesma usando o **Kubernetes**.
-Uma das partes mais interessantes deste projeto foi o trabalho em equipe que tivemos, usamos ferramentas em conjunto como o git e o draw.io e tivemos uma boa coesão como dupla.
-Gostaríamos de agradecer a Compass.UOL pela oportunidade que nos deram neste estágio, pelo tanto que já aprendemos ao longo desta jornada.
+Tivemos que estudar bastante pra entender os conceitos de como migrar uma arquitetura _on-premise_ para a Nuvem AWS e depois definir os processos de modernização da mesma usando o **Kubernetes**. Uma das partes mais enriquecedoras deste projeto foi o trabalho em equipe. Utilizamos ferramentas colaborativas, como o Git e o Draw.io, o que fortaleceu nossa organização e produtividade. Além disso, tivemos uma excelente sintonia como dupla, o que contribuiu significativamente para o sucesso do projeto.
+Gostaríamos de expressar nossa gratidão à **Compass.UOL** pela oportunidade de participar deste estágio e por todo o conhecimento compartilhado ao longo dessa jornada. Essa experiência foi fundamental para o nosso aprendizado e desenvolvimento profissional.
 
 ---
 
