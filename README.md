@@ -232,6 +232,7 @@ Ainda continuaremos usando algumas ferramentas usadas no processo de migração,
 
 #### Qual o diagrama da infraestrutura na AWS?
 
+![Diagrama Modernizado](diagrama-modernizado.png)
 ---
 
 #### Como serão garantidos os requisitos de Segurança?
@@ -273,7 +274,8 @@ Segue abaixo a tabela de custos da estimativa da região North Virginia:
 |KMS               |$ 11,00            |North Virginia  |
 |EKS Cluster       |$ 73,00            |North Virginia  |
 |VPC               |$ 154,20           |North Virginia  |
-|**Total**             |**$ 898,74**           
+|EC2 (Worker Nodes)|$ 103,95           |North Virginia  |
+|**Total**             |**$ 1,002.69**           
 
 Valor total da modernização Single-Region = $ 898,74
 
@@ -291,11 +293,12 @@ Segue abaixo a tabela de custos da estimativa da região Ohio:
 |KMS               |$ 11,00            |Ohio            |
 |EKS Cluster       |$ 73,00            |Ohio            |
 |VPC               |$ 154,20           |Ohio            |
-|**Total**             |**$ 895,14**
+|EC2 (Worker Nodes)|$ 103,95           |Ohio  |
+|**Total**             |**$ 999.09**
 
 Para o modelo de Multi-Region, somamos o custo mensal das duas regiões para uma infraestrutura com uma alta disponibilidade e resiliência das aplicações, reduzindo a sobrecarga de cada região, otimizando a utilização de recursos.
 
-Valor total da modernização Multi-Region = $ 1.793,88
+Valor total da modernização Multi-Region = **$ 2.001,78**
 
 ---
 
