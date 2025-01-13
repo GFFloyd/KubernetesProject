@@ -15,7 +15,10 @@ O projeto é apenas teórico, onde teremos que detalhar de forma técnica todo o
 ### Índice
 
 * [Escopo Detalhado (As-Is)](#escopo-detalhado-as-is)
+
 * [Escopo Detalhado (Kubernetes)](#escopo-detalhado-modernização-kubernetes)
+
+* [Referências](#referências)
 
 ---
 
@@ -200,11 +203,16 @@ Abaixo detalharemos brevemente cada processo do pipeline, como mostra a imagem:
 
 ###### 2b. Configuração do AWS EKS
 
-Com a implementação da área de Pipeline, conseguimos integrar a equipe de desenvolvimento diretamente ao **EKS** Cluster, que opera dentro da VPC. O **EKS (Elastic Kubernetes Service)** é uma solução gerenciada pela AWS para orquestração de contêineres com Kubernetes. Ele simplifica a configuração, o gerenciamento e a escalabilidade dos clusters, automatizando processos e permitindo que a equipe se concentre no desenvolvimento e na operação das aplicações.
+Com a implementação da área de **Pipeline**, conseguimos integrar a equipe de desenvolvimento diretamente ao **EKS** Cluster, que opera dentro da VPC. O **EKS (Elastic Kubernetes Service)** é uma solução gerenciada pela AWS para orquestração de contêineres com Kubernetes. Ele simplifica a configuração, o gerenciamento e a escalabilidade dos clusters, automatizando processos e permitindo que a equipe se concentre no desenvolvimento e na operação das aplicações.
 
 O tráfego do cliente é direcionado inicialmente pelo **Route 53**, que encaminha as requisições para a arquitetura. O tráfego passa então pelo **WAF (Web Application Firewall)**, que oferece uma camada adicional de proteção para as aplicações, funcionando como um firewall. Em seguida, a conexão é distribuída de forma eficiente pelo **ALB (Application Load Balancer)**, que roteia o tráfego de entrada e o direciona com segurança, em conjunto com o NAT Gateway para os **Worker Nodes**, que estão alocados dentro das subnets privadas.
 
 Dentro do **EKS Cluster**, alocamos duas zonas de disponibilidade (AZs), cada uma com suas respectivas subnets públicas e privadas. As subnets públicas hospedam os **NAT Gateways**, responsáveis pela distribuição do tráfego para os **Worker Nodes**, onde os Pods executam os contêineres que hospedam as aplicações do cluster.
+
+#### 3. Criação de Réplica para o RDS
+
+Uma boa prática desta nossa arquitetura será a replicação do Banco de Dados, para fazer isto precisaremos colocar uma **RDS** em outra **AZ** dentro da região que estamos criando a arquitetura. 
+Esta **RDS** possuirá conexão síncrona com o Banco de Dados original, se por ventura ocorrer alguma falha na **AZ**, este banco deixará de ficar em _standby_ imediatamente, até que o banco principal volta novamente a funcionar.
 
 ---
 
@@ -252,6 +260,14 @@ A segurança dessa arquitetura deve ser construída com múltiplas camadas, incl
 ---
 
 #### Como será realizado o processo de Backup?
+
+O processo de backup será garantido com o uso do **Amazon S3**, aproveitando recursos avançados para proteção e recuperação de dados. O primeiro passo é ativar o versionamento no bucket, permitindo o armazenamento de todas as versões de um objeto, mesmo que ele seja sobrescrito ou excluído. Isso assegura que versões anteriores estejam sempre disponíveis. Além disso, o **S3** oferece a replicação entre buckets, tanto na mesma região quanto em outra, aumentando a resiliência e a capacidade de recuperação em casos de desastres.
+
+No caso do **EKS Cluster**, o backup será automatizado com base nas pré-configurações estabelecidas. Por exemplo, o uso de **Auto Scaling Groups** permite a substituição automática de worker nodes em caso de falhas. Ferramentas como eksctl ou o **AWS Management Console** serão utilizadas para exportar as configurações do cluster, incluindo arquivos YAML, deployments, configmaps e ingress. Isso facilita a restauração e a manutenção da infraestrutura.
+
+O **CloudWatch** será utilizado para armazenar logs de auditoria e operacionais, garantindo que esses dados estejam seguros e acessíveis durante a execução das aplicações. Essa prática melhora a rastreabilidade e assegura conformidade operacional.
+
+Para o banco de dados **Amazon RDS (MySQL)**, será configurada uma ou mais réplicas em diferentes zonas de disponibilidade (AZs) para oferecer redundância e suporte a failover. A replicação será feita de forma síncrona, o que significa que os dados serão copiados para a réplica antes de confirmar a transação na instância primária. Além disso, em uma arquitetura que abrange múltiplas regiões, será possível configurar a replicação entre regiões usando **Read Replicas Cross-Region**, garantindo alta disponibilidade mesmo em cenários de desastre global (opcional).
 
 ---
 
@@ -302,11 +318,23 @@ Valor total da modernização Multi-Region = **$ 2.001,78**
 
 ---
 
+### Conclusão
+
+Este projeto foi bastante útil para aprendermos novas tecnologias dentro da Nuvem AWS, como o **AWS EKS** ou o **Code Pipeline**, por mais que o projeto tenha sido mais teórico do que prático, não deixou de ser um ótimo conhecimento que agregamos.
+Tivemos que estudar bastante pra entender como migrar uma arquitetura _on-premise_ para a Nuvem AWS e depois definir os processos de modernização da mesma usando o **Kubernetes**.
+Uma das partes mais interessantes deste projeto foi o trabalho em equipe que tivemos, usamos ferramentas em conjunto como o git e o draw.io e tivemos uma boa coesão como dupla.
+Gostaríamos de agradecer a Compass.UOL pela oportunidade que nos deram neste estágio, pelo tanto que já aprendemos ao longo desta jornada.
+
+---
+
 ### Referências
 
 [Documentação da AWS MGN](https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html)
+
 [Documentação da AWS DMS](https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html)
 
+[Documentação do AWS EKS](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
+
+[Documentação da AWS Code Pipeline](https://docs.aws.amazon.com/codepipeline/)
+
 ---
-texto do vito
-texto do Gabriel
