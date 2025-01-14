@@ -170,7 +170,7 @@ Esses valores se referem a um custo mensal, agora podemos calcular o valor mais 
 Para esta etapa precisaremos seguir alguns passos para completa modernização do sistema usando o Kubernetes:
 * Criação de novas sub-redes para dividir logicamente a arquitetura (no modelo **three-tier**), alocação de novas Zonas de Disponibilidade, para termos uma estrutura mais resiliente.
 * Conteinerização de cada parte da aplicação (**AWS ECR**) e implementação do **AWS EKS** como contexto Kubernetes dentro da Nuvem AWS.
-* Criação de uma área específica para os desenvolvedores do aplicativo conseguirem seguir os _pipelines_ de _DevOps_ usando os serviços **AWS Code Commit**, **AWS Code Deploy** e o **AWS Code Build**.
+* Criação de uma área específica para os desenvolvedores do aplicativo conseguirem seguir os _pipelines_ de _DevOps_ usando o serviço **AWS Code Build**.
 * Implementação de uma melhor estrutura de monitoramento da aplicação usando o **AWS CloudWatch**.
 * Implementação de um sistema mais robusto de segurança da informação usando o **AWS KMS**, o **Secrets Manager** e o **AWS WAF**.
 * Replicação do Banco de Dados em outra Zonas de Disponibilidade e maior otimização para a arquitetura.
