@@ -293,7 +293,7 @@ Segue abaixo a tabela de custos da estimativa da região North Virginia:
 |EC2 (Worker Nodes)|$ 103,95           |North Virginia  |
 |**Total**             |**$ 1,002.69**           
 
-Valor total da modernização Single-Region = $ 898,74
+Valor total da modernização Single-Region = $ 1,002.69
 
 Segue abaixo a tabela de custos da estimativa da região Ohio:
 
